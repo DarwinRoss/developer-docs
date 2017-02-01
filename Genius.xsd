@@ -36,7 +36,22 @@
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
-			<xs:element type="xs:string" name="TrackingId"/>
+			<xs:element name="EbtDetails" minOccurs="0" maxOccurs="1">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element type="xs:string" name="EbtType"/>
+						<xs:element name="Balances">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element type="xs:decimal" name="CashAvailableBalance"/>
+									<xs:element type="xs:decimal" name="SnapAvailableBalance"/>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element type="xs:string" name="TrackingId" minOccurs="0" maxOccurs="1"/>
 			<xs:element name="EMV" minOccurs="0" maxOccurs="1">
 				<xs:complexType>
 					<xs:sequence>
