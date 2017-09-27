@@ -4,7 +4,7 @@ This repository contains a number of code samples, quick start guides, and examp
 
 # Overview
 
-* "examples" contains full-fledged blah blah blah
-  * /examples/cayan-checkout/ contains blah blah
-  * /examples/genius-mini/ios/ contains blah blah
-  * /examples/genius-mini/android/ contains blah blah
+* "examples" contains standalone projects 
+  * /examples/cayan-checkout/ is a demonstration of how to implement Cayan Checkout using C#
+  * /examples/genius-mini/ios/ is a micro mobile POS application, written in Objective C, that shows how to use the Genius Mini iOS API
+  * /examples/genius-mini/android/ is a micro mobile POS application, written in Java, that shows how to use the Genius Mini and Handheld Android API
