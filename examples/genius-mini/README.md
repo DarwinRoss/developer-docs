@@ -8,7 +8,7 @@ Genius Mini for iOS is available as a download from the Apple Store. Genius Mini
 
 [Genius Mini iOS documentation](https://cayan.com/developers/knowledge-base/documents-samples/cayan-genius-mini-ios-documentation) is available on our developers site.
 
-![Genius Mini iOS in action](.README/screenshots/ios/Payment_selection_screen.JPG)
+<img src="https://github.com/Cayan-LLC/developer-docs/raw/master/examples/genius-mini/.README/screenshots/ios/Payment_selection_screen.PNG"  title="Genius Mini iOS in action" alt="Genius Mini iOS in action" width="50%" height="50%" />
 
 TODO: Link to the Apple Store
 
@@ -21,6 +21,6 @@ Genius Mini for Android is available as a download from the Google Play Store.  
 
 Developers are free to implement either API.
 
-![Genius Mini iOS in action](.README/screenshots/android/Payment_selection_screen.JPG)
+<img src="https://github.com/Cayan-LLC/developer-docs/raw/master/examples/genius-mini/.README/screenshots/android/Payment_selection_screen.png" title="Genius Mini Android in action" alt="Genius Mini Android in action" width="50%" height="50%"/>
 
 TODO: link to PDF/HTML documentation; link to the Google Store
