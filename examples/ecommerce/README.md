@@ -1,4 +1,4 @@
-#Introduction
+# Introduction
 
 The Merchantware Ecommerce library is designed as a method for easily processing credit cards from your website and remaining in PCI compliance while retaining your site's own custom look and feel.  The process is simple and requires a minimal amount of integration on your part.
 
@@ -36,17 +36,17 @@ The Merchantware Ecommerce library is designed as a method for easily processing
 +--------------------------------+
 ```
 
-#Requirements
+# Requirements
 
 The Merchantware Ecommerce library is designed to work on a large number of devices and browsers.  At this time, we require that users have Internet Explorer 8+, Chrome, Firefox, or Safari.
 
 > At this time, we have not tested against mobile browsers which may be officially supported in the future.
 
-#Getting Started Tutorial
+# Getting Started Tutorial
 
 To begin using the Merchantware Ecommerce library, create a checkout page that has a form which includes space for a credit card number, a CVV code, an expiration date month, and an expiration date year.  You can use any HTML name or ID attributes you want for these fields.
 
-##Setting up the Payment Form
+## Setting up the Payment Form
 
 On each of the relevant form elements, add a special `data-cayan` attribute that is used to identify the purpose of the element to the library.  You can see a full list of the attributes supported in the reference section of this document.
 
@@ -94,7 +94,7 @@ Finally, you need to set the Web API key for the merchant account you wish to us
 </script>
 ```
 
-##Creating a Single-Use Token
+## Creating a Single-Use Token
 
 You are now completely ready to begin the process of turning the payment data into a single-use token.  The token expires two minutes after its creation.  To do this, you will need to intercept the click event of a button, or the submit action of a form.  For this example, we are going to use the latest version of jQuery but you can use any framework you wish.  
 
@@ -149,7 +149,7 @@ function successCallback(tokenResponse) {
 }
 ```
 
-##Performing a Sale with the Single-Use Token
+## Performing a Sale with the Single-Use Token
 
 Now that the server has submitted the form, you can retrieve the single-use token from the form data and process the transaction.  The token is stored in the Merchantware Vault allowing you to use the token with the standard Vault-based Preauthorization, Sale, or Level 2 Sale transactions.
 
@@ -183,11 +183,11 @@ https://ps1.merchantware.net/merchantware/documentation40/standard/credit_SaleVa
 https://ps1.merchantware.net/merchantware/documentation40/standard/credit_Level2SaleVault.aspx
 https://ps1.merchantware.net/merchantware/documentation40/standard/credit_PreAuthorizationVault.aspx
 
-#JavaScript API Reference
+# JavaScript API Reference
 
-##Functions
+## Functions
 
-###CayanCheckout.setWebApiKey(apiKey)
+### CayanCheckout.setWebApiKey(apiKey)
 This function is used to set the merchant account used to tokenize the payment information.
 
 Parameter | Type | Description
@@ -200,7 +200,7 @@ Example:
 CayanCheckout.setWebApiKey("ABCDEF0123456789");
 ```
 
-###CayanCheckout.createPaymentToken(handlers)
+### CayanCheckout.createPaymentToken(handlers)
 This function is used to create a single-use token from the payment information on the current HTML page.
 
 Parameter | Type | Description
@@ -216,9 +216,9 @@ Cayan.createPaymentToken({
 });
 ```
 
-##Objects
+## Objects
 
-###Handlers
+### Handlers
 
 A set of key/value pairs used to configure the behavior for the `CayanCheckout.createPaymentToken()` function.  Both the `success` and the `error` functions are required.
 
@@ -227,7 +227,7 @@ Field | Type | Description
 success | Function | Function (TokenResponse data)<br><br>A function that is called when the payment information was successfully converted into a single-use token.  The data contains basic information about the token including when it was created, and when it expires.<br><br>This is a required field.
 error | Function | Function (ErrorResponse[] error)<br><br>A function that is called when there was an error creating the single-use token from the payment data.  The error response contains a list of error codes and responses related to that error code.<br><br>This is a required field.
 
-###TokenResponse
+### TokenResponse
 The token response object is returned by the `success` callback of the `CayanCheckout.createPaymentToken()` method.
 
 Field | Type | Description
@@ -246,7 +246,7 @@ Example:
 }
 ```
 
-###ErrorResponse
+### ErrorResponse
 
 The error response object is returned by the `error` callback of the `CayanCheckout.createPaymentToken()` method.
 
@@ -270,8 +270,7 @@ Example:
 ]
 ```
 
-#Error Code Reference 
-
+# Error Code Reference 
 
 Error_Code | Reason | Description
 ---------- | ------ | -----------
@@ -285,7 +284,7 @@ SERVER | PAYMENT_NOT_SUPPORTED | The payment method is not supported by the merc
 SERVER_REQUIRED | {data-cayan-element} | The server did not receive a field which is required to create a single-use token.<br><br>This should not occur under normal circumstances, as all required fields are validated in the JavaScript library.
 SERVER_VALIDATION | {data-cayan-element} | The server received a field which failed validation.<br><br>This should not occur under normal circumstances, as all required fields are validated in the JavaScript library.
 
-#Supported Data-Cayan Form Elements
+# Supported Data-Cayan Form Elements
 
 Value | Required | Description
 ----- | -------- | -----------
