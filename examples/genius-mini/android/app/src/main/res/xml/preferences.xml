@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="Merchant Settings">
+
+        <EditTextPreference
+            android:key="merchantName"
+            android:defaultValue="@string/merchant_name"
+            android:title="Merchant Name" />
+
+        <EditTextPreference
+            android:key="merchantSiteId"
+            android:defaultValue="@string/merchant_site_id"
+            android:title="Merchant Site ID" />
+
+        <EditTextPreference
+            android:key="merchantKey"
+            android:defaultValue="@string/merchant_key"
+            android:title="Merchant Key" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="Version Settings">
+
+        <EditTextPreference
+            android:key="getAgreementVer"
+            android:defaultValue="@string/version1"
+            android:title="@string/title_agreement" />
+
+        <EditTextPreference
+            android:key="getSignatureVer"
+            android:defaultValue="@string/version1"
+            android:title="@string/title_signature" />
+
+        <EditTextPreference
+            android:key="saleVer"
+            android:defaultValue="@string/version2"
+            android:title="Initiate" />
+
+        <EditTextPreference
+            android:key="keyedEntryVer"
+            android:defaultValue="@string/version1"
+            android:title="@string/keyed_entry" />
+
+        <EditTextPreference
+            android:key="cancelVer"
+            android:defaultValue="@string/version1"
+            android:title="Cancel" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="Terminal Settings">
+
+        <EditTextPreference
+            android:key="format"
+            android:defaultValue="@string/XML"
+            android:title="Format" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

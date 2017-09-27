@@ -1,0 +1,16 @@
+//
+//  main.m
+//  CayanPos
+//
+//  Created by CongLi on 28/6/16.
+//  Copyright © 2016 CongLi. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+#import "AppDelegate.h"
+
+int main(int argc, char * argv[]) {
+    @autoreleasepool {
+        return UIApplicationMain(argc, argv, nil, NSStringFromClass([AppDelegate class]));
+    }
+}

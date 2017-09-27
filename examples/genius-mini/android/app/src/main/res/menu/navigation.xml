@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_main"
+        android:icon="@drawable/ic_credit_card_black_24dp"
+        android:title="@string/title_main" />
+
+    <item
+        android:id="@+id/navigation_signature"
+        android:icon="@drawable/ic_get_signature_24dp"
+        android:title="@string/title_signature" />
+
+    <item
+        android:id="@+id/navigation_agreement"
+        android:icon="@drawable/ic_get_agreement_24dp"
+        android:title="@string/title_agreement" />
+
+    <item
+        android:id="@+id/navigation_settings"
+        android:icon="@drawable/ic_settings_24dp"
+        android:title="@string/title_settings" />
+
+</menu>
