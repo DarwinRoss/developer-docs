@@ -12,9 +12,9 @@ namespace MWSaleVault
             //Create MerchantCredentails object
             MerchantCredentials merchantCredentials = new MerchantCredentials
             {
-                MerchantName = "mltest",
-                MerchantSiteId = "11111111",
-                MerchantKey = "11111-11111-11111-11111-11111"
+                MerchantName = "TEST MERCHANT",
+                MerchantSiteId = "XXXXXXXX",
+                MerchantKey = "XXXXX-XXXXX-XXXXX-XXXXX-XXXXX"
             };
             //Create PaymentData object
             PaymentData paymentData = new PaymentData
@@ -37,7 +37,7 @@ namespace MWSaleVault
             //Run Sale
             TransactionResponse45 saleResponse = soapClient.Sale(merchantCredentials, paymentData, saleRequest);
             //Print Results
-            Console.WriteLine("Sale Response: {0} Token: {1} Amount: ${2}", saleResponse.ApprovalStatus, saleResponse.Token, saleResponse.Amount);
+            Console.WriteLine("Sale Response: {0}{3} Token: {1}{3} Amount: ${2}{3}", saleResponse.ApprovalStatus, saleResponse.Token, saleResponse.Amount, Environment.NewLine);
             Console.WriteLine("Press Any Key to Close");
             Console.ReadKey();
         }
