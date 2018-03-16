@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+    
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Genius JavaScript LID Start Order Code Sample</title>
+        <meta name="description" content="A code sample for sending the Line Item Display Start Order call to a Genius device using JavaScript.">
+
+    </head>
+    <body>
+      <form>
+          Genius IP:<br>
+          <input type="text" name="geniusIp" id="geniusIp"><br>
+          Response:<br>
+          <textarea name="responseBox" id="responseBox"></textarea><br>
+          <button type="button" id="btnSend" onclick="GeniusStartOrderCall()">Send</button>
+          <button type="button" id="btnCancel" onclick="GeniusCancelCall()">Cancel</button>
+          
+</form>
+
+
+<script>
+
+function GeniusStartOrderCall() {
+    
+    //Store the url for the call in a variable and read the IP address for the device from the Genius IP text box on the page.
+    var startOrderCall = "http://" + document.getElementById("geniusIp").value + ":8080/pos?Action=StartOrder&Order=1234&Format=XML"
+    
+    var xmlHttp = new XMLHttpRequest();
+    //Start a listener looking for a response back (readyState 4) and s successful response (status 200).
+    xmlHttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            //Print the response from the call to the Response text box.
+            document.getElementById("responseBox").value = this.responseText;
+        }
+    };
+    //Make a GET call using the url we defined at the start of the function.
+    xmlHttp.open("GET", startOrderCall);
+    xmlHttp.send(null);
+};
+
+function GeniusCancelCall() {
+    
+    //Store the url for the call in a variable and read the IP address for the device from the Genius IP text box on the page.
+    var cancelCall = "http://" + document.getElementById("geniusIp").value + ":8080/pos?Action=Cancel&Format=XML"
+    
+    var xmlHttp = new XMLHttpRequest();
+    //Start a listener looking for a response back (readyState 4) and s successful response (status 200).
+    xmlHttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            //Print the response from the call to the Response text box.
+            document.getElementById("responseBox").value = this.responseText;
+        }
+    };
+    //Make a GET call using the url we defined at the start of the function.
+    xmlHttp.open("GET", cancelCall);
+    xmlHttp.send(null);
+};
+
+
+</script>
+        
+    </body>
+</html>
