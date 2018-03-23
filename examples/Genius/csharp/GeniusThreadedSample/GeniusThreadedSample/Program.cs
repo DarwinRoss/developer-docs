@@ -54,12 +54,12 @@ namespace GeniusThreadedSample
             Console.ReadKey();
         }
 
-        private static async Task<TransactionResult> GeniusSale(string url)
+        private static async Task<TransactionResult> GeniusSale(string geniusRequest)
         {
-            WebRequest webReq = WebRequest.Create(url);
-            using (WebResponse webResp = await webReq.GetResponseAsync())
+            WebRequest webRequest = WebRequest.Create(geniusRequest);
+            using (WebResponse webResponse = await webRequest.GetResponseAsync())
             {
-                using (Stream responseStream = webResp.GetResponseStream())
+                using (Stream responseStream = webResponse.GetResponseStream())
                 {
                     // Validate XML to Genius XSD class
                     StreamReader streamReader = new StreamReader(responseStream);
@@ -70,12 +70,12 @@ namespace GeniusThreadedSample
             }
         }
 
-        private static async Task<CancelResult> GeniusCancel(string url)
+        private static async Task<CancelResult> GeniusCancel(string geniusRequest)
         {
-            WebRequest webReq = WebRequest.Create(url);
-            using (WebResponse webResp = await webReq.GetResponseAsync())
+            WebRequest webRequest = WebRequest.Create(geniusRequest);
+            using (WebResponse webResponse = await webRequest.GetResponseAsync())
             {
-                using (Stream responseStream = webResp.GetResponseStream())
+                using (Stream responseStream = webResponse.GetResponseStream())
                 {
                     // Validate XML to Genius XSD class
                     StreamReader streamReader = new StreamReader(responseStream);
