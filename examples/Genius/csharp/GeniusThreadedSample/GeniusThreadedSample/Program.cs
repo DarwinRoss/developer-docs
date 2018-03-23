@@ -1,23 +1,23 @@
 ﻿using System;
-using System.Threading.Tasks;
-using GeniusThreadedSample.TransportWeb;
-using System.Net;
 using System.IO;
+using System.Net;
+using System.Threading.Tasks;
 using System.Xml.Serialization;
+using GeniusThreadedSample.TransportWeb;
 
 namespace GeniusThreadedSample
 {
-    class Program
+    public class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
-            //Declare credentials to be used with the Stage Transaction Request
+            // Declare credentials to be used with the Stage Transaction Request
             string credentialsName = "TEST MERCHANT";
             string credentialsSiteID = "XXXXXXXX";
             string credentialsKey = "XXXXX-XXXXX-XXXXX-XXXXX-XXXXX";
             string ipAddress = "192.168.0.123";
 
-            //Build Transport request details
+            // Build Transport request details
             Console.WriteLine("Staging Transaction{0}", Environment.NewLine);
             TransportServiceSoapClient transportServiceSoapClient = new TransportServiceSoapClient();
             TransportRequest transportRequest = new TransportRequest
@@ -35,11 +35,11 @@ namespace GeniusThreadedSample
                 ForceDuplicate = true,
             };
 
-            //Stage Transaction
+            // Stage Transaction
             TransportResponse transportResponse = transportServiceSoapClient.CreateTransaction(credentialsName, credentialsSiteID, credentialsKey, transportRequest);
             string transportKey = transportResponse.TransportKey;
             Console.WriteLine("TransportKey Received = {0}{1}", transportKey, Environment.NewLine);
-            //Initiate transaction thread with received TransportKey
+            // Initiate transaction thread with received TransportKey
             Task<TransactionResult> transactionResult = GeniusSale($"http://{ipAddress}:8080/v2/pos?TransportKey={transportKey}&Format=XML");
             Console.WriteLine("Waiting 3 seconds before canceling transaction");
             System.Threading.Thread.Sleep(3000);
@@ -49,19 +49,19 @@ namespace GeniusThreadedSample
             transactionResult.Wait();
             Console.WriteLine("Transaction Result: {0}", transactionResult.Result.Status);
 
-            //Close application
+            // Close application
             Console.WriteLine("Press Any Key to Close");
             Console.ReadKey();
         }
 
-        static async Task<TransactionResult> GeniusSale(string url)
+        private static async Task<TransactionResult> GeniusSale(string url)
         {
             WebRequest webReq = WebRequest.Create(url);
             using (WebResponse webResp = await webReq.GetResponseAsync())
             {
                 using (Stream responseStream = webResp.GetResponseStream())
                 {
-                    //Validate XML to Genius XSD class
+                    // Validate XML to Genius XSD class
                     StreamReader streamReader = new StreamReader(responseStream);
                     XmlSerializer xmlSerializer = new XmlSerializer(typeof(TransactionResult));
                     TransactionResult transactionResult = (TransactionResult)xmlSerializer.Deserialize(streamReader);
@@ -70,14 +70,14 @@ namespace GeniusThreadedSample
             }
         }
 
-        static async Task<CancelResult> GeniusCancel(string url)
+        private static async Task<CancelResult> GeniusCancel(string url)
         {
             WebRequest webReq = WebRequest.Create(url);
             using (WebResponse webResp = await webReq.GetResponseAsync())
             {
                 using (Stream responseStream = webResp.GetResponseStream())
                 {
-                    //Validate XML to Genius XSD class
+                    // Validate XML to Genius XSD class
                     StreamReader streamReader = new StreamReader(responseStream);
                     XmlSerializer xmlSerializer = new XmlSerializer(typeof(CancelResult));
                     CancelResult transactionResult = (CancelResult)xmlSerializer.Deserialize(streamReader);
