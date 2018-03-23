@@ -16,7 +16,7 @@ namespace GeniusSample
             string credentialsKey = "XXXXX-XXXXX-XXXXX-XXXXX-XXXXX";
             string ipAddress = "192.168.0.123";
 
-            //Request for TransportKey
+            //Build Transport request details
             Console.WriteLine("Staging Transaction{0}", Environment.NewLine);
             TransportServiceSoapClient transportServiceSoapClient = new TransportServiceSoapClient();
             TransportRequest transportRequest = new TransportRequest
@@ -33,32 +33,29 @@ namespace GeniusSample
                 PoNumber = "PO12345",
                 ForceDuplicate = true,
             };
-            TransportResponse transportResponse = new TransportResponse();
 
             //Stage Transaction
-            transportResponse = transportServiceSoapClient.CreateTransaction(credentialsName, credentialsSiteID, credentialsKey, transportRequest);
+            TransportResponse transportResponse = transportServiceSoapClient.CreateTransaction(credentialsName, credentialsSiteID, credentialsKey, transportRequest);
             string transportKey = transportResponse.TransportKey;
             Console.WriteLine("TransportKey Received = {0}{1}", transportKey, Environment.NewLine);
 
             //Initiate transaction with TransportKey
-            string transactionResultXml;
             WebRequest webReq = WebRequest.Create($"http://{ipAddress}:8080/v2/pos?TransportKey={transportKey}&Format=XML");
             using (WebResponse webResp = webReq.GetResponse())
             {
                 using (Stream responseStream = webResp.GetResponseStream())
                 {
-                    //Load and display response data in XML format on-screen
+                    //Validate XML to Genius XSD class
                     StreamReader streamReader = new StreamReader(responseStream);
-                    transactionResultXml = streamReader.ReadToEnd();
-                    Console.WriteLine("{0}Response: {0}{1}", Environment.NewLine, transactionResultXml);
+                    XmlSerializer xmlSerializer = new XmlSerializer(typeof(TransactionResult));
+                    TransactionResult transactionResult = (TransactionResult)xmlSerializer.Deserialize(streamReader);
+                    Console.WriteLine("Transaction Result: {0}", transactionResult.Status);
+                    Console.WriteLine("Amount: {0}", transactionResult.AmountApproved);
+                    Console.WriteLine("AuthCode: {0}", transactionResult.AuthorizationCode);
+                    Console.WriteLine("Token: {0}",transactionResult.Token);
+                    Console.WriteLine("Account Number: {0}", transactionResult.AccountNumber);
                 }
             }
-
-            //Validate XML to Genius XSD class
-            XmlSerializer xmlSerializer = new XmlSerializer(typeof(TransactionResult));
-            StringReader stringReader = new StringReader(transactionResultXml);
-            TransactionResult transactionResult = (TransactionResult)xmlSerializer.Deserialize(stringReader);
-            Console.WriteLine("{1}Transaction Result: {0}{1}", transactionResult.Status, Environment.NewLine);
 
             //Close application
             Console.WriteLine("Press Any Key to Close");

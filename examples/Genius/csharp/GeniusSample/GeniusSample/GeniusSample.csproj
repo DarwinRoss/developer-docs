@@ -46,6 +46,7 @@
     <Reference Include="System.Xml.Serialization" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Genius.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service References\TransportWeb\Reference.cs">
@@ -56,6 +57,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Genius.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\TransportWeb\TransportWeb.CreateTransactionResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
