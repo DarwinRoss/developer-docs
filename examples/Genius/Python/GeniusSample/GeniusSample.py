@@ -1,51 +1,48 @@
-import urllib2
-import xml.etree.ElementTree as ElementTree
+import urllib3
+import lxml.etree as etree
+import lxml.objectify as objectify
 from zeep.client import Client
 
-# Generate WSDL and SOAP Objects
-client = Client('https://transport.merchantware.net/v4/transportService.asmx?WSDL')
-transportSoap = client.service
-transportRequestType = client.get_type("ns0:TransportRequest")
+# Declare credentials to be used with the Stage Transaction Request
+credentialsName = "TEST MERCHANT"
+credentialsSiteID = "XXXXXXXX"
+credentialsKey = "XXXXX-XXXXX-XXXXX-XXXXX-XXXXX"
+ipAddress = "192.168.0.123"
 
-# Populate Transport Request values
-transportRequest = transportRequestType(
-    TransactionType="sale",
+# Generate XML and XSD Validation
+geniusSchema = etree.XMLSchema(file='Genius.xsd')
+xmlparser = objectify.makeparser(schema=geniusSchema)
+
+# Generate WSDL and SOAP Objects Build Transport request details
+transportSoap = Client(wsdl='https://transport.merchantware.net/v4/transportService.asmx?WSDL')
+transportRequest = transportSoap.get_type("ns0:TransportRequest")(
+    TransactionType="SALE",
     Amount=1.01,
     ClerkId="1",
-    OrderNumber="1126",
-    Dba="Test DBA",
+    OrderNumber="INV1234",
+    Dba="TEST MERCHANT",
     SoftwareName="Test Software",
     SoftwareVersion="1.0",
     TransactionId="102911",
-    ForceDuplicate=True,
-    PoNumber="PO12345",
-    TaxAmount=0.00,
-    EntryMode="Undefined"
+    TerminalId = "01",
+    PoNumber="PO1234",
+    ForceDuplicate=True
 )
 
-# Request Credentials
-print "Enter Merchant Credentials (Merchant Name, Merchant SiteID, Merchant Key)"
-credentialsName = raw_input("Merchant Name: ")
-credentialsSiteID = raw_input("Merchant SiteID: ")
-credentialsKey = raw_input("Merchant Key: ")
-
-# Send Transport request and collect TransportKey
-transportResponse = transportSoap.CreateTransaction(credentialsName, credentialsSiteID, credentialsKey, transportRequest)
+# Stage Transaction
+transportResponse = transportSoap.service.CreateTransaction(credentialsName, credentialsSiteID, credentialsKey, transportRequest)
 transportKey = transportResponse.TransportKey
+print("TransportKey Received: %s\n" % transportKey)
 
-print "TransportKey Received: %s\n" % transportKey
-
-# Request Genius IP
-ipAddress = raw_input("Genius IP: ")
-
-# Send request to Genius and print response
-print "\nSending TransportKey %s to Terminal %s" % (transportKey, ipAddress)
+# Initiate transaction with TransportKey
+print("\nSending TransportKey %s to Terminal %s" % (transportKey, ipAddress))
+geniusComm = urllib3.PoolManager()
 geniusRequest = "http://%s:8080/v2/pos?TransportKey=%s&Format=XML" % (ipAddress, transportKey)
-geniusResponse = urllib2.urlopen(geniusRequest).read()
+geniusResponse = geniusComm.request("GET", geniusRequest).data
 
-# Print Status of transaction details
-geniusXml = ElementTree.fromstring(geniusResponse)
-print "Terminal Response:\n\n%s\n" % geniusResponse
-print "Transaction Result: %s" % geniusXml.find("Status").text
+# Validate the response with the Genius XSD
+geniusResponseData = objectify.fromstring(geniusResponse, xmlparser)
+print("Terminal Response:\n\n%s\n" % geniusResponse)
+print("Transaction Result: %s" % geniusResponseData.Status)
 
-raw_input("Press Enter to close")
+input("Press Enter to close")
